@@ -1,42 +1,16 @@
-use yew::{html, Component, ComponentLink, Html, ShouldRender};
+use warp::Filter;
 
-struct Model {
-    link: ComponentLink<Self>,
-}
+#[tokio::main]
+async fn main() {
+    let cors = warp::cors()
+        .allow_origin("http://localhost:8000")
+        .allow_methods(vec!["GET", "POST"]);
 
-enum Msg {
-    DoIt,
-}
-
-impl Component for Model {
-    // Some details omitted. Explore the examples to see more.
-
-    type Message = Msg;
-    // type Properties = ();
-
-    // fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
-    //     Model { link }
-    // }
-
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        match msg {
-            Msg::DoIt => {
-                // Update your model on events
-                println!("Button pressed.");
-                true
-            }
-        }
-    }
-
-    fn view(&self) -> Html {
-        let onclick = self.link.callback(|_| Msg::DoIt);
-        html! {
-            // Render your model here
-            <button onclick=onclick>{ Click me! }</button>
-        }
-    }
-}
-
-fn main() {
-    yew::start_app::<Model>();
+    // GET /hello/warp => 200 OK with body "Hello, warp!"
+    let hello = warp::path!("hello" / String)
+        .map(|name| format!("Hello, {}!", name))
+        .with(cors);
+    warp::serve(hello)
+        .run(([127, 0, 0, 1], 3030))
+        .await;
 }
