@@ -1,5 +1,5 @@
 [package]
-name = "lights"
+name = "weblights"
 version = "0.1.0"
 authors = ["sean"]
 edition = "2018"
