@@ -9,7 +9,7 @@ use std::time::Duration;
 
 const ON_PIN: u64 = 23;
 const OFF_PIN : u64 = 60;
-const SLEEP_TIME: u64 = 500;
+const SLEEP_TIME: u64 = 200;  // ms
 
 pub enum Mode {
     On,

@@ -22,6 +22,7 @@ async fn main() {
     let cors = warp::cors()
         .allow_origin("http://beaglebone.local")
         .allow_origin("http://192.168.0.102")
+        .allow_origin("http://192.168.0.160:8000")
         .allow_methods(vec!["GET", "POST"]);
 
     // GET /hello/warp => 200 OK with body "Hello, warp!"
